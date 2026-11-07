@@ -76,7 +76,7 @@ void esp_cache_err_int_init(void)
 
     /* Then enable cache access error interrupts. */
     cache_ll_l1_enable_access_error_intr(0, CACHE_LL_L1_ACCESS_EVENT_MASK);
-    cache_ll_l2_enable_access_error_intr(0, CACHE_LL_L2_ACCESS_EVENT_MASK);
+    // cache_ll_l2_enable_access_error_intr(0, CACHE_LL_L2_ACCESS_EVENT_MASK);
 
     /* Enable the interrupts for cache error. */
     ESP_INTR_ENABLE(ETS_CACHEERR_INUM);
