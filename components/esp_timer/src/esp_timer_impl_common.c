@@ -42,7 +42,8 @@ void ESP_TIMER_IRAM_ATTR esp_timer_impl_set_alarm(uint64_t timestamp)
 #ifdef CONFIG_ESP_TIMER_SUPPORTS_ISR_DISPATCH_METHOD
 void ESP_TIMER_IRAM_ATTR esp_timer_impl_try_to_set_next_alarm(void)
 {
-    esp_os_enter_critical_from_isr(&s_time_update_lock);
+    // esp_os_enter_critical_from_isr(&s_time_update_lock);
+    esp_os_enter_critical_isr(&s_time_update_lock);
     unsigned now_alarm_idx;  // ISR is called due to this current alarm
     unsigned next_alarm_idx; // The following alarm after now_alarm_idx
     if (timestamp_id[0] < timestamp_id[1]) {
@@ -62,7 +63,8 @@ void ESP_TIMER_IRAM_ATTR esp_timer_impl_try_to_set_next_alarm(void)
         // Remove the current alarm from consideration as well.
         timestamp_id[now_alarm_idx] = UINT64_MAX;
     }
-    esp_os_exit_critical_from_isr(&s_time_update_lock);
+    // esp_os_exit_critical_from_isr(&s_time_update_lock);
+    esp_os_exit_critical_isr(&s_time_update_lock);
 }
 #endif
 
